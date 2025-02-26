@@ -40,7 +40,7 @@ class OrbitalImprovement:
         modulus_coordinate = np.linalg.norm(self.initial_coordinate)
         modulus_velocity = np.linalg.norm(self.initial_velocity)
         
-        arcsecond_radian = ARCSECOND * np.pi / 64800
+        arcsecond_radian = ARCSECOND * np.pi / 648000
         
         delta_coordinate = np.array([
             np.random.uniform(-1, 1) * arcsecond_radian * modulus_coordinate,
@@ -158,7 +158,7 @@ class OrbitalImprovement:
         print(f"Finished calculating integration for intial coordinates and velocities. Elapsed time: {runtime:.6f} s.")
 
     # Compute the calculated data using the integrator
-    def calculate_calculated_data(self):
+    def calculate_calculated_data(self, n_iter):
         logger.log_info("Calculating computed coordinates and velocities.")
         print("Calculating computed coordinates and velocities. Please wait.")
         # Setup dataframe for saving data
@@ -188,6 +188,8 @@ class OrbitalImprovement:
         error_velocity = self.intermediate_velocity + self.delta_velocity
         self.intermediate_coordinate = error_coordinate
         self.intermediate_velocity = error_velocity
+        logger.log_info(f"Error coordinate: {self.delta_coordinate}.")
+        logger.log_info(f"Error velocity: {self.delta_velocity}.")
         logger.log_info(f"Coordinate with error: {error_coordinate}.")
         logger.log_info(f"Velocity with error: {error_velocity}.")
 
@@ -235,21 +237,21 @@ class OrbitalImprovement:
         df = pd.concat([df, computed_df], ignore_index=True)
 
         # Save the value to csv "calculation_data.csv"
-        df.to_csv(PATH_CALCULATION_DATA, index=False)
-        logger.log_info(f"Data is saved to {PATH_CALCULATION_DATA}\n\n")
-        print(f"Data is saved to {PATH_CALCULATION_DATA}!")
+        df.to_csv(PATH_CALCULATION_DATA.format(n_iter), index=False)
+        logger.log_info(f"Data is saved to {PATH_CALCULATION_DATA.format(n_iter)}\n\n")
+        print(f"Data is saved to {PATH_CALCULATION_DATA.format(n_iter)}!")
         end = time()
         runtime = end - start
         logger.log_info(f"Finished calculating integration for intial coordinates and velocities. Elapsed time: {runtime:.6f} s.")
         print(f"Finished calculating integration for intial coordinates and velocities. Elapsed time: {runtime:.6f} s.")
 
     # Calcualte c vector
-    def calculate_c(self):
+    def calculate_c(self, n_iter):
         print("Calculating difference between observation and computed data. Please wait.")
         logger.log_info("Calculating difference between observation and computed data. Please wait.")
         start = time()
         df_observation = pd.read_csv(PATH_OBSERVATION_DATA)
-        df_calculation = pd.read_csv(PATH_CALCULATION_DATA)
+        df_calculation = pd.read_csv(PATH_CALCULATION_DATA.format(n_iter))
 
         c_df = df_observation[['x_1', 'x_2', 'x_3']] - df_calculation[['x_1', 'x_2', 'x_3']]
         c_vector = c_df.iloc[1:].values.flatten()
@@ -260,11 +262,11 @@ class OrbitalImprovement:
         return c_vector
 
     # Calculate A (Isochronous derivatives matrix)
-    def calculate_A(self):
+    def calculate_A(self, n_iter):
         print("Calculating A (Isochronous derivatives matrix). Please wait.")
         logger.log_info("Calculating A (Isochronous derivatives matrix).")
         start = time()
-        df_calculation = pd.read_csv(PATH_CALCULATION_DATA)
+        df_calculation = pd.read_csv(PATH_CALCULATION_DATA.format(n_iter))
 
         coordinate_columns = ['x_1', 'x_2', 'x_3']
 
@@ -416,17 +418,17 @@ class OrbitalImprovement:
             logger.log_info(f"Iteration: {n_iter}.")
 
             # Compute calculation data
-            self.calculate_calculated_data()
+            self.calculate_calculated_data(n_iter)
             
             # Retrieve current coordinate and velocity
             coordinate = fh.get_coordinate(0)
             velocity = fh.get_velocity(0)
             
             # Calculate difference between observation and calculated, delta x_ik(O-C)
-            c_vector = self.calculate_c()
+            c_vector = self.calculate_c(n_iter)
             
             # Calculate A (Isochronous derivatives matrix)
-            A_matrix = self.calculate_A()
+            A_matrix = self.calculate_A(n_iter)
             
             # Calculate y - desired correction
             Q = self.calculate_Q(A_matrix)

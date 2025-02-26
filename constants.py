@@ -8,7 +8,7 @@ PATH_EXE = "iszm_puc.exe"
 PATH_FIRST_STEP = "data/variation_selection/first_step_data.csv"
 PATH_VARIATION_STEP = "data/variation_selection/{}/variation_step_data_{}.csv"
 PATH_OBSERVATION_DATA = "data/orbit_improvements/observation_data.csv"
-PATH_CALCULATION_DATA = "data/orbit_improvements/calculation_data.csv"
+PATH_CALCULATION_DATA = "data/orbit_improvements/calculation_data_iteration_{}.csv"
 PATH_RESULT = "data/orbit_improvements/result.csv"
 PATH_FIGURE = "pics/derivative_variation_{}.png"
 
