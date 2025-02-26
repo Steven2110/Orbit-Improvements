@@ -387,68 +387,6 @@ class OrbitalImprovement:
             vy_label: [],
             vz_label: []
         })
-        # n_iter = 1
-        # # Compute calculation data
-        # self.calculate_calculated_data()
-        # # Calculate difference between observation and calculated, delta x_ik(O-C)
-        # # then make into vector c
-        # c_vector = self.calculate_c()
-        # # Calculate A (Isochronous derivatives matrix)
-        # A_matrix = self.calculate_A()
-        # # Calculate y - desired correction
-        # # A . y = c with minimum squared method
-        # # Q = A^T A, d = A^t c
-        # # y = Q^-1 d
-        # Q = self.calculate_Q(A_matrix)
-        # d = self.calculate_d(A_matrix, c_vector)
-        # y = self.calculate_y(Q, d)
-        # self.delta_coordinate = np.split(y, 2)[0]
-        # self.delta_velocity = np.split(y, 2)[1]
-        
-        # sigma_0, sigma_i = self.calculate_sigma(Q, c_vector)
-        
-        # coordinate = fh.get_coordinate(100)
-        # velocity = fh.get_velocity(100)
-        # df.loc[len(df)] = [
-        #     n_iter, 
-        #     sigma_0,
-        #     coordinate[0],
-        #     coordinate[1],
-        #     coordinate[2],
-        #     velocity[0],
-        #     velocity[1],
-        #     velocity[2]
-        # ]
-        
-        # n_iter += 1
-        # # Compute calculation data
-        # self.calculate_calculated_data()
-        # # Calculate difference between observation and calculated, delta x_ik(O-C)
-        # # then make into vector c
-        # c_vector = self.calculate_c()
-        # # Calculate A (Isochronous derivatives matrix)
-        # A_matrix = self.calculate_A()
-        # # Calculate y - desired correction
-        # # A . y = c with minimum squared method
-        # # Q = A^T A, d = A^t c
-        # # y = Q^-1 d
-        # Q = self.calculate_Q(A_matrix)
-        # d = self.calculate_d(A_matrix, c_vector)
-        # y = self.calculate_y(Q, d)
-        
-        # sigma_0, sigma_i = self.calculate_sigma(Q, c_vector)
-        # coordinate = fh.get_coordinate(100)
-        # velocity = fh.get_velocity(100)
-        # df.loc[len(df)] = [
-        #     n_iter, 
-        #     sigma_0,
-        #     coordinate[0],
-        #     coordinate[1],
-        #     coordinate[2],
-        #     velocity[0],
-        #     velocity[1],
-        #     velocity[2]
-        # ]
         
         print("Running main algorithm.")
         logger.log_info("Running main algorithm.")
