@@ -32,6 +32,8 @@ class OrbitalImprovement:
         self.initial_coordinate, self.initial_velocity = self.calculate_initial_coordinate_velocity()
         self.calculate_observation_data()
         self.delta_coordinate, self.delta_velocity = self.generate_error()
+        self.intermediate_coordinate = self.initial_coordinate
+        self.intermediate_velocity = self.initial_velocity
         
     def generate_error(self):
         # Add error to the initial coordinates and velocities
@@ -182,8 +184,10 @@ class OrbitalImprovement:
         logger.log_info(f"Initial coordinate: {fh.get_coordinate(i=0)}")
         logger.log_info(f"Initial velocity: {fh.get_velocity(i=0)}")
         
-        error_coordinate = self.initial_coordinate + self.delta_coordinate
-        error_velocity = self.initial_velocity + self.delta_velocity
+        error_coordinate = self.intermediate_coordinate + self.delta_coordinate
+        error_velocity = self.intermediate_velocity + self.delta_velocity
+        self.intermediate_coordinate = error_coordinate
+        self.intermediate_velocity = error_velocity
         logger.log_info(f"Coordinate with error: {error_coordinate}.")
         logger.log_info(f"Velocity with error: {error_velocity}.")
 
