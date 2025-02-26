@@ -370,13 +370,19 @@ class OrbitalImprovement:
     def run(self):
         # Prepare DataFrame to save the result
         iteration_label = "Iteration"
-        sigma_label = r"$\sigma_{0}$"
+        sigma_label = "Sigma 0"
+        sigma_x_label = "Sigma x"
+        sigma_y_label = "Sigma y"
+        sigma_z_label = "Sigma z"
+        sigma_vx_label = "Sigma vx"
+        sigma_vy_label = "Sigma vy"
+        sigma_vz_label = "Sigma vz"
         x_label = "X (km)"
         y_label = "Y (km)"
         z_label = "Z (km)"
-        vx_label = r"$V_{x} (km/s)$"
-        vy_label = r"$V_{y} (km/s)$"
-        vz_label = r"$V_{z} (km/s)$"
+        vx_label = "Vx (km/s)"
+        vy_label = "Vy (km/s)"
+        vz_label = "Vz (km/s)"
         df = pd.DataFrame({
             iteration_label: [],
             sigma_label: [],
@@ -385,7 +391,13 @@ class OrbitalImprovement:
             z_label: [],
             vx_label: [],
             vy_label: [],
-            vz_label: []
+            vz_label: [],
+            sigma_x_label: [],
+            sigma_y_label: [],
+            sigma_z_label: [],
+            sigma_vx_label: [],
+            sigma_vy_label: [],
+            sigma_vz_label: []
         })
         
         print("Running main algorithm.")
@@ -432,7 +444,13 @@ class OrbitalImprovement:
                 coordinate[2],
                 velocity[0],
                 velocity[1],
-                velocity[2]
+                velocity[2],
+                sigma_i[0],
+                sigma_i[1],
+                sigma_i[2],
+                sigma_i[3],
+                sigma_i[4],
+                sigma_i[5]
             ]
 
             # Check if sigma_0 is still decreasing
