@@ -141,9 +141,9 @@ for exp in range(-12, 0):
             "x_1": [coordinate_with_variation[0]],
             "x_2": [coordinate_with_variation[1]],
             "x_3": [coordinate_with_variation[2]],
-            "vx_1": [initial_velocity[0]],
-            "vx_2": [initial_velocity[1]],
-            "vx_3": [initial_velocity[2]]
+            "vx_1": [velocity_with_variation[0]],
+            "vx_2": [velocity_with_variation[1]],
+            "vx_3": [velocity_with_variation[2]]
         })
 
         logger.log_info(f"Initial data with variations {variations}")
@@ -231,6 +231,8 @@ titles = [
 ]
 
 for i in range(6):
+    plt.clf()  # Clear the current figure
+    plt.figure()  # Create a new figure
     derivatives = []
     for exp in range(-12, 0):
         var = pow(10, exp)
@@ -247,7 +249,7 @@ for i in range(6):
     plt.plot(variations, derivatives[:,2], label=r"$\dfrac{\partial x_{3}}{\partial x_{30}}$")
     plt.plot(variations, derivatives[:,3], label=r"$\dfrac{\partial \dot{x_{1}}}{\partial \dot{x_{10}}}$")
     plt.plot(variations, derivatives[:,4], label=r"$\dfrac{\partial \dot{x_{2}}}{\partial \dot{x_{20}}}$")
-    plt.plot(variations, derivatives[:,5], label=r"$\dfrac{\partial \dot{x_{2}}}{\partial \dot{x_{20}}}$")
+    plt.plot(variations, derivatives[:,5], label=r"$\dfrac{\partial \dot{x_{3}}}{\partial \dot{x_{20}}}$")
     plt.xscale("log")  # Log scale for variation
     plt.ylabel("Derivation")
     plt.xlabel("Variation")
